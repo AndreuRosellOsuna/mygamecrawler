@@ -1,0 +1,24 @@
+package com.mycrawler.web.scraper.impl;
+
+import com.mycrawler.web.scraper.AbstractScraper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.math.BigDecimal;
+
+public class GameScraper extends AbstractScraper {
+
+    private final Logger logger = LoggerFactory.getLogger(GameScraper.class);
+
+    @Override
+    public void acceptConsentCookies() {
+        page.click("#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll");
+    }
+
+    @Override
+    public BigDecimal getProductPrice(String name) {
+        String price = page.locator("#ProductPrice").inputValue();
+        logger.info("price for {} is {}", name, price);
+        return new BigDecimal(price.replace(",", "."));
+    }
+}

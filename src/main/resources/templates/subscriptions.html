@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>MyCrawler - Subscriptions</title>
+    <!--/*/ <th:block th:insert="~{fragments/general.html :: headers}"></th:block> /*/-->
+</head>
+<body>
+<nav th:replace="~{fragments/general.html :: navbar}"></nav>
+
+<div class="container">
+    <h1 class="display-3">Subscriptions</h1>
+    <div class="container">Subscriptions for user <span th:text="${username}"></span></div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Product Id</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Best price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="subscription, subscriptionStats: ${subscriptions}">
+                <th scope="row" th:text="${subscriptionStats.index + 1}"></th>
+                <td th:text="${subscription.productId()}"></td>
+                <td th:text="${subscription.productName()}" ></td>
+                <td th:text="${subscription.bestPrice()}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

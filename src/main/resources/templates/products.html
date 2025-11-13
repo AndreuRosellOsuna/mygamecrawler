@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>MyCrawler - Products</title>
+    <!--/*/ <th:block th:insert="~{fragments/general.html :: headers}"></th:block> /*/-->
+</head>
+<body>
+<nav th:replace="~{fragments/general.html :: navbar}"></nav>
+<div class="container">
+    <h1 class="display-3">Products</h1>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Product Id</th>
+                <th scope="col">Product Name</th>
+                <th scope="col" colspan="3">Product Stores</th>
+                <th scope="col">Subscription Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="product, productStats: ${productList}">
+                <tr th:each="stock, stockStats : ${product.stocks()}">
+                    <th scope="row"
+                        th:if="${stockStats.first}"
+                        th:text="${productStats.index + 1}"
+                        th:attrappend="rowspan=${stockStats.size}"
+                        th:classappend="${stockStats.size > 1 } ? 'align-middle' : '' "
+                    ></th>
+                    <td th:if="${stockStats.first}"
+                        th:text="${product.id()}"
+                        th:attrappend="rowspan=${stockStats.size}"
+                        th:classappend="${stockStats.size > 1 } ? 'align-middle' : '' "
+                    ></td>
+                    <td th:if="${stockStats.first}"
+                        th:text="${product.name()}"
+                        th:attrappend="rowspan=${stockStats.size}"
+                        th:classappend="${stockStats.size > 1 } ? 'align-middle' : '' "></td>
+                    <td th:text="${stock.storeName()}"></td>
+                    <td >
+                        <div class="icon-container">
+                            <a th:href="${stock.url()}" target="_blank">
+                                <img class="img-fluid" th:src="'/img/' + ${stock.storeCode()} + '.png'" th:alt="${stock.storeName()}"/>
+                            </a>
+                        </div>
+                    </td>
+                    <td th:if="${stock.price() == null}"></td>
+                    <td th:unless="${stock.price() == null}" th:text="${stock.price()} + ' €'"></td>
+                    <td th:if="${product.subscribed() && stockStats.first}"
+                        th:attrappend="rowspan=${stockStats.size}"
+                        th:classappend="${stockStats.size > 1 } ? 'align-middle' : '' "
+                    >
+                        <form th:action="@{/unsubscribe-product}" method="post">
+                            <input type="hidden" name="productId" th:value="${product.id()}"/>
+                            <button type="submit" class="btn btn-outline-danger btn-sm">Unsubscribe</button>
+                        </form>
+                    </td>
+                    <td th:if="${!product.subscribed() && stockStats.first}"
+                        th:attrappend="rowspan=${stockStats.size}"
+                        th:classappend="${stockStats.size > 1 } ? 'align-middle' : '' "
+                    >
+                        <form th:action="@{/subscribe-product}" method="post">
+                            <input type="hidden" name="productId" th:value="${product.id()}"/>
+                            <button type="submit" class="btn btn-outline-success btn-sm">Subscribe</button>
+                        </form>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
