@@ -7,6 +7,7 @@ import org.springframework.batch.core.annotation.AfterJob;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
@@ -24,14 +25,21 @@ public class ImportDataJobConfig {
     private final ApplicationEventPublisher applicationEventPublisher;
 
     private Job importStoresJob;
+    private final Boolean importdata;
 
-    public ImportDataJobConfig(JobLauncher jobLauncher, ApplicationEventPublisher applicationEventPublisher) {
+    public ImportDataJobConfig(JobLauncher jobLauncher, ApplicationEventPublisher applicationEventPublisher,
+                               @Value("${mycrawler.importdata:false}") Boolean importdata) {
         this.jobLauncher = jobLauncher;
         this.applicationEventPublisher = applicationEventPublisher;
+        this.importdata = importdata;
     }
 
     @EventListener(ApplicationReadyEvent.class)
     public void handleApplicationReady(ApplicationReadyEvent event) {
+        if (!importdata) {
+            logger.info("Import data disabled");
+            return;
+        }
         var jobParameters = new JobParametersBuilder()
                 .addDate("timestamp", new Date())
                 .toJobParameters();

@@ -1,4 +1,6 @@
 /export/
+.env
+.envprod
 
 HELP.md
 target/

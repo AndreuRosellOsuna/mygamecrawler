@@ -14,12 +14,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.EnableAsync;
 
 import java.util.Date;
 
 @Configuration
-@EnableAsync
 public class UpdatePricesConfig {
 
     private static final Logger logger = LoggerFactory.getLogger(UpdatePricesConfig.class);
@@ -36,7 +34,11 @@ public class UpdatePricesConfig {
 
     @EventListener(ImportDataJobCompletedSuccessfully.class)
     @Async
-    public void handleApplicationReady(ImportDataJobCompletedSuccessfully event) {
+    public void runUpdateStockPricesJob(ImportDataJobCompletedSuccessfully event) {
+        runUpdateStockPricesJob();
+    }
+
+    public void runUpdateStockPricesJob() {
         logger.info("Update stock prices initialized");
         storeRepository.findAll()
                 .stream()
