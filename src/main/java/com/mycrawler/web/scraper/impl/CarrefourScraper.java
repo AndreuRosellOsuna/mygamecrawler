@@ -11,6 +11,10 @@ public class CarrefourScraper extends AbstractScraper {
 
     private final Logger logger = LoggerFactory.getLogger(CarrefourScraper.class);
 
+    protected CarrefourScraper(Integer timeout) {
+        super(timeout);
+    }
+
     @Override
     public void acceptConsentCookies() {
         page.click("#onetrust-accept-btn-handler");

@@ -11,6 +11,10 @@ public class PSNScraper extends AbstractScraper {
 
     private final Logger logger = LoggerFactory.getLogger(PSNScraper.class);
 
+    protected PSNScraper(Integer timeout) {
+        super(timeout);
+    }
+
     @Override
     public void acceptConsentCookies() {
         page.click("#onetrust-accept-btn-handler");

@@ -13,8 +13,14 @@ public abstract class AbstractScraper implements ScraperActions {
 
     private final Logger logger = LoggerFactory.getLogger(AbstractScraper.class);
 
+    private final Integer timeout;
+
     protected Browser browser;
     protected Page page;
+
+    protected AbstractScraper(Integer timeout) {
+        this.timeout = timeout;
+    }
 
     public BigDecimal runPriceScrap(String name, String url) {
         BigDecimal price;
@@ -26,7 +32,7 @@ public abstract class AbstractScraper implements ScraperActions {
             browser = playwright.webkit().launch(new BrowserType.LaunchOptions()
                     .setHeadless(true)
 //                    .setArgs(Collections.singletonList("--mute-audio"))
-                    .setTimeout(60000));
+                    .setTimeout(timeout));
             page = browser.newPage();
 
             logger.info("Page created, trying navigate to {}", url);

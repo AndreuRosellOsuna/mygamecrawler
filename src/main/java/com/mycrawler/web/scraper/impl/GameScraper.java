@@ -10,6 +10,10 @@ public class GameScraper extends AbstractScraper {
 
     private final Logger logger = LoggerFactory.getLogger(GameScraper.class);
 
+    protected GameScraper(Integer timeout) {
+        super(timeout);
+    }
+
     @Override
     public void acceptConsentCookies() {
         page.click("#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll");

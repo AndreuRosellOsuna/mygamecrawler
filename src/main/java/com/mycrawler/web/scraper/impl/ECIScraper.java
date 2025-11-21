@@ -11,6 +11,10 @@ public class ECIScraper extends AbstractScraper {
 
     private final Logger logger = LoggerFactory.getLogger(ECIScraper.class);
 
+    protected ECIScraper(Integer timeout) {
+        super(timeout);
+    }
+
     @Override
     public void acceptConsentCookies() {
         page.click("#onetrust-accept-btn-handler");

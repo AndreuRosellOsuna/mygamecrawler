@@ -12,6 +12,10 @@ public class MediamarktScraper extends AbstractScraper {
 
     private final Logger logger = LoggerFactory.getLogger(MediamarktScraper.class);
 
+    protected MediamarktScraper(Integer timeout) {
+        super(timeout);
+    }
+
     @Override
     public void acceptConsentCookies() {
         page.click("#pwa-consent-layer-accept-all-button");
