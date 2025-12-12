@@ -25,6 +25,6 @@ public class JobsConfig {
     @Scheduled(cron="0 0 8,20 * * *")
     public void scheduleUpdatePricesJob() {
         logger.info("Update stock prices job scheduled");
-        updatePricesRunner.runUpdateStockPricesJob();
+        updatePricesRunner.runUpdatePricesJobs(null);
     }
 }

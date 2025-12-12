@@ -34,19 +34,18 @@ public class UpdatePricesRunner {
 
     @EventListener(ImportDataJobCompletedSuccessfully.class)
     @Async
-    public void runUpdateStockPricesJob(ImportDataJobCompletedSuccessfully event) {
+    public void runUpdatePricesJobs(ImportDataJobCompletedSuccessfully event) {
         runUpdateStockPricesJob();
+        runProductBestPrices();
     }
 
-    public void runUpdateStockPricesJob() {
+    private void runUpdateStockPricesJob() {
         logger.info("Update stock prices initialized");
         storeRepository.findAll()
                 .stream()
                 .map(StoreEntity::getStoreCode)
                 .forEach(this::runUpdateStockPricesJob);
         logger.info("Update stock prices finished");
-
-        runProductBestPrices();
     }
 
     private void runUpdateStockPricesJob(String store) {
