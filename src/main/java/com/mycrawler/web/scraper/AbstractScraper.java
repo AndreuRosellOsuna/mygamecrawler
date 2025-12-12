@@ -27,7 +27,7 @@ public abstract class AbstractScraper implements ScraperActions {
         logger.info("Scraping {} from {}", name, url);
 
         try (Playwright playwright = Playwright.create()) {
-            logger.info("Playwright created, trying launch browser");
+            logger.debug("Playwright created, trying launch browser");
 
             browser = playwright.webkit().launch(new BrowserType.LaunchOptions()
                     .setHeadless(true)
@@ -35,13 +35,13 @@ public abstract class AbstractScraper implements ScraperActions {
                     .setTimeout(timeout));
             page = browser.newPage();
 
-            logger.info("Page created, trying navigate to {}", url);
+            logger.debug("Page created, trying navigate");
             page.navigate(url, new Page.NavigateOptions().setTimeout(60000));
 
-            logger.info("Navigated to {}, trying accept consent cookies", url);
+            logger.debug("Navigated, trying accept consent cookies");
             acceptConsentCookies();
 
-            logger.info("Accepted consent cookies, trying get price for {}", name);
+            logger.debug("Accepted consent cookies, trying get price");
             price = getProductPrice(name);
 
             logger.info("Price for {} is \"{}\"", name, price);

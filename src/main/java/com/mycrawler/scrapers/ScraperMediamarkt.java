@@ -29,11 +29,12 @@ public class ScraperMediamarkt {
 
                 List<Locator> spans = page.locator("[data-test=\"mms-product-price\"]").locator("span").all();
                 System.out.println("span size is " + spans.size());
-                if(spans.size() >= 6) {
-                    price = spans.get(7).textContent();
-                } else {
-                    price = spans.get(3).textContent();
-                }
+                price = spans.get(4).textContent();
+//                if(spans.size() >= 6) {
+//                    price = spans.get(7).textContent();
+//                } else {
+//                    price = spans.get(3).textContent();
+//                }
 
                 System.out.println("price for " + name + " is " + price);
 
