@@ -3,7 +3,6 @@ package com.mycrawler.web.jobs.updateprices.updateproductbestprice;
 import com.mycrawler.web.entities.ProductEntity;
 import jakarta.persistence.EntityManagerFactory;
 import org.springframework.batch.core.Step;
-import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.database.JpaItemWriter;
@@ -32,7 +31,6 @@ public class UpdateProductBestPriceStep {
                 .build();
     }
 
-    @StepScope
     @Bean
     public JpaPagingItemReader<ProductEntity> readProducts(EntityManagerFactory entityManagerFactory) {
         return new JpaPagingItemReaderBuilder<ProductEntity>()
@@ -44,13 +42,11 @@ public class UpdateProductBestPriceStep {
     }
 
     @Bean
-    @StepScope
     public UpdateProductsBestPriceProcessor updateProductsBestPriceProcessor() {
         return new UpdateProductsBestPriceProcessor();
     }
 
     @Bean
-    @StepScope
     public JpaItemWriter<ProductEntity> updateProductsBestPriceWriter(EntityManagerFactory entityManagerFactory) {
         return new JpaItemWriterBuilder<ProductEntity>()
                 .entityManagerFactory(entityManagerFactory)
