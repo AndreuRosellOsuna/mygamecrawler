@@ -21,6 +21,8 @@ public class ProductEntity {
 
     private BigDecimal bestPrice;
 
+    private BigDecimal previousBestPrice;
+
     public void setProductId(Long productId) {
         this.productId = productId;
     }
@@ -59,5 +61,13 @@ public class ProductEntity {
 
     public void setBestPrice(BigDecimal bestPrice) {
         this.bestPrice = bestPrice;
+    }
+
+    public BigDecimal getPreviousBestPrice() {
+        return previousBestPrice;
+    }
+
+    public void setPreviousBestPrice(BigDecimal previousBestPrice) {
+        this.previousBestPrice = previousBestPrice;
     }
 }

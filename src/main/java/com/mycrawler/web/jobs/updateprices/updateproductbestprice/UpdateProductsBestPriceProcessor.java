@@ -18,6 +18,8 @@ public class UpdateProductsBestPriceProcessor implements ItemProcessor<ProductEn
     public ProductEntity process(ProductEntity item) throws Exception {
         logger.info("Updating product best price from item {}", item.getProductName());
 
+        item.setPreviousBestPrice(item.getBestPrice());
+
         BigDecimal minimumPrice = item.getStocks()
                 .stream()
                 .map(StockEntity::getPrice)
