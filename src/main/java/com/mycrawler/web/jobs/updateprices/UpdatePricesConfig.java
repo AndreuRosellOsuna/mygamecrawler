@@ -33,6 +33,13 @@ public class UpdatePricesConfig {
                 .build();
     }
 
+    @Bean
+    public Job notifySubscribersJob(JobRepository jobRepository, Step notifySubscribers) {
+        return new JobBuilder("notifySubscribersJob", jobRepository)
+                .start(notifySubscribers)
+                .build();
+    }
+
     @AfterJob
     public void afterJob(JobExecution jobExecution) {
         if (jobExecution.getStatus() == BatchStatus.COMPLETED) {

@@ -23,13 +23,14 @@ public class UpdatePricesRunner {
     private final StoreRepository storeRepository;
     private final Job updateStockPricesJob;
     private final Job updateProductsBestPricesJob;
-//    private final Job notifySubscribersJob;
+    private final Job notifySubscribersJob;
 
-    public UpdatePricesRunner(JobLauncher jobLauncher, StoreRepository storeRepository, Job updateStockPricesJob, Job updateProductsBestPricesJob) {
+    public UpdatePricesRunner(JobLauncher jobLauncher, StoreRepository storeRepository, Job updateStockPricesJob, Job updateProductsBestPricesJob, Job notifySubscribersJob) {
         this.jobLauncher = jobLauncher;
         this.storeRepository = storeRepository;
         this.updateStockPricesJob = updateStockPricesJob;
         this.updateProductsBestPricesJob = updateProductsBestPricesJob;
+        this.notifySubscribersJob = notifySubscribersJob;
     }
 
     @EventListener(ImportDataJobCompletedSuccessfully.class)
@@ -37,6 +38,7 @@ public class UpdatePricesRunner {
     public void runUpdatePricesJobs(ImportDataJobCompletedSuccessfully event) {
         runUpdateStockPricesJob();
         runProductBestPrices();
+        runNotifySubscribers();
     }
 
     private void runUpdateStockPricesJob() {
@@ -72,5 +74,18 @@ public class UpdatePricesRunner {
             logger.error(String.valueOf(e));
         }
         logger.info("Update products best price finished");
+    }
+
+    private void runNotifySubscribers() {
+        logger.info("Notify subscribers initialized");
+        var jobParameters = new JobParametersBuilder()
+                .addDate("timestamp", new Date())
+                .toJobParameters();
+        try {
+            jobLauncher.run(notifySubscribersJob, jobParameters);
+        } catch (Exception e) {
+            logger.error(String.valueOf(e));
+        }
+        logger.info("Notify subscribers finished");
     }
 }
