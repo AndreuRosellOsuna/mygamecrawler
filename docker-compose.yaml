@@ -1,0 +1,21 @@
+name: mycrawler
+networks:
+  reverse_proxy_network:
+    external: true
+  mam-databases-prod_mam-databases-network-prod:
+    external: true
+volumes:
+  mycrawler-browser: null
+services:
+  mycrawler:
+    image: andreuro/mycrawler:latest
+    container_name: mycrawler
+    networks:
+      - reverse_proxy_network
+      - mam-databases-prod_mam-databases-network-prod
+    ports:
+      - 127.0.0.1:8050:8080
+    env_file:
+      - .envprod
+    volumes:
+      - mycrawler-browser:/ms-playwright
