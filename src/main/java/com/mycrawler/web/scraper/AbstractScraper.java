@@ -36,7 +36,7 @@ public abstract class AbstractScraper implements ScraperActions {
             page = browser.newPage();
 
             logger.debug("Page created, trying navigate");
-            page.navigate(url, new Page.NavigateOptions().setTimeout(60000));
+            page.navigate(url, new Page.NavigateOptions().setTimeout(timeout));
 
             logger.debug("Navigated, trying accept consent cookies");
             acceptConsentCookies();

@@ -18,7 +18,9 @@ public class MediamarktScraper extends AbstractScraper {
 
     @Override
     public void acceptConsentCookies() {
-        page.click("#pwa-consent-layer-accept-all-button");
+        if(page.locator("#pwa-consent-layer-accept-all-button").count() > 0) {
+            page.click("#pwa-consent-layer-accept-all-button");
+        }
     }
 
     @Override

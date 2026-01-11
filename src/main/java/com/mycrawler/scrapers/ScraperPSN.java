@@ -21,8 +21,12 @@ public class ScraperPSN {
             games.forEach((name, url) -> {
                 System.out.println("Scraping " + name + " from " + url);
                 Page page = browser.newPage();
-                Response res = page.navigate(url);
-                page.click("#onetrust-accept-btn-handler");
+//                Response res = page.navigate(url);
+                page.navigate(url, new Page.NavigateOptions().setTimeout(120000));
+
+                if(page.locator("#onetrust-accept-btn-handler").count() > 0) {
+                    page.click("#onetrust-accept-btn-handler");
+                }
 
                 String price;
 //                int countLocalPriceLocator = page.locator(".buybox__price").count();

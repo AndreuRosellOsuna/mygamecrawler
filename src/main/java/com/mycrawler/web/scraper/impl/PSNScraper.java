@@ -17,7 +17,9 @@ public class PSNScraper extends AbstractScraper {
 
     @Override
     public void acceptConsentCookies() {
-        page.click("#onetrust-accept-btn-handler");
+        if(page.locator("#onetrust-accept-btn-handler").count() > 0) {
+            page.click("#onetrust-accept-btn-handler");
+        }
     }
 
     @Override

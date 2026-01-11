@@ -16,7 +16,9 @@ public class GameScraper extends AbstractScraper {
 
     @Override
     public void acceptConsentCookies() {
-        page.click("#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll");
+        if(page.locator("#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll").count() > 0) {
+            page.click("#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll");
+        }
     }
 
     @Override
