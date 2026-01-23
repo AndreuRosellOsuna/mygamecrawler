@@ -25,11 +25,13 @@ public class ScraperMediamarkt {
                 Response res = page.navigate(url);
                 page.click("#pwa-consent-layer-accept-all-button");
 
-                String price;
+                String price = null;
 
                 List<Locator> spans = page.locator("[data-test=\"mms-product-price\"]").locator("span").all();
                 System.out.println("span size is " + spans.size());
-                price = spans.get(4).textContent();
+                if(spans.size() >= 5) {
+                    price = spans.get(4).textContent();
+                }
 //                if(spans.size() >= 6) {
 //                    price = spans.get(7).textContent();
 //                } else {

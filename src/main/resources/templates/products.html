@@ -45,7 +45,7 @@
                             </a>
                         </div>
                     </td>
-                    <td th:if="${stock.price() == null}"></td>
+                    <td th:if="${stock.price() == null}">Not available</td>
                     <td th:unless="${stock.price() == null}" th:text="${stock.price()} + ' €'"></td>
                     <td th:if="${product.subscribed() && stockStats.first}"
                         th:attrappend="rowspan=${stockStats.size}"

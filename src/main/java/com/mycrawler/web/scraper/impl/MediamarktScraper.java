@@ -28,9 +28,16 @@ public class MediamarktScraper extends AbstractScraper {
 
         List<Locator> spans = page.locator("[data-test=\"mms-product-price\"]").locator("span").all();
         System.out.println("span size is " + spans.size());
-        String price = spans.get(4).textContent();
+        String price = null;
+        if(spans.size() >= 5) {
+            price = spans.get(4).textContent();
+        }
 
         logger.info("price for {} is {}", name, price);
-        return new BigDecimal(price.replace(",", ".").replace("€", ""));
+        if(price == null) {
+            return null;
+        } else {
+            return new BigDecimal(price.replace(",", ".").replace("€", ""));
+        }
     }
 }
