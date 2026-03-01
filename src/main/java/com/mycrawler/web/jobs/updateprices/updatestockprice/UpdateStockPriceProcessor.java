@@ -29,10 +29,14 @@ public class UpdateStockPriceProcessor implements ItemProcessor<StockEntity, Sto
         String productName = item.getProduct().getProductName();
 
         ScraperActions gameScraper = scraperFactory.getScraper(store);
-        BigDecimal productPrice = gameScraper.runPriceScrap(productName, item.getUrl());
-//        gameScraper.saveScreenShot(productName);
 
-        item.setPrice(productPrice);
+        try {
+            BigDecimal productPrice = gameScraper.runPriceScrap(productName, item.getUrl());
+            item.setPrice(productPrice);
+        } catch (Exception e) {
+            logger.error("Error updating stock price for item {} from store {}", item.getStockId(), store);
+            item.setPrice(null);
+        }
         return item;
     }
 }
