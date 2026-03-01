@@ -35,6 +35,7 @@ public class UpdateStockPriceProcessor implements ItemProcessor<StockEntity, Sto
             item.setPrice(productPrice);
         } catch (Exception e) {
             logger.error("Error updating stock price for item {} from store {}", item.getStockId(), store);
+            logger.error(e.toString());
             item.setPrice(null);
         }
         return item;
