@@ -34,8 +34,7 @@ public class UpdateStockPriceProcessor implements ItemProcessor<StockEntity, Sto
             BigDecimal productPrice = gameScraper.runPriceScrap(productName, item.getUrl());
             item.setPrice(productPrice);
         } catch (Exception e) {
-            logger.error("Error updating stock price for item {} from store {}", item.getStockId(), store);
-            logger.error(e.toString());
+            logger.error("Error updating stock price for item {} from store {} - Error: {}", item.getStockId(), store, e.toString());
             item.setPrice(null);
         }
         return item;
