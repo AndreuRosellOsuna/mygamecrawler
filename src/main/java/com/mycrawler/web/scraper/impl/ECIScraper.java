@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 
 public class ECIScraper extends AbstractScraper {
 
@@ -24,7 +25,12 @@ public class ECIScraper extends AbstractScraper {
 
     @Override
     public BigDecimal getProductPrice(String name) {
-        String price = page.locator(".product-detail-price").textContent();
+        String price = Arrays.stream(
+                page.locator(".product-detail-price")
+                        .innerText()
+                        .split(" ")
+        ).sorted().findFirst().orElse("");
+
         logger.info("price for {} is {}", name, price);
 
         String fixedPrice = PriceExtractor.validateBigDecimalFromString(price);
