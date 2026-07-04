@@ -1,9 +1,6 @@
 package com.mycrawler.web.scraper;
 
-import com.microsoft.playwright.Browser;
-import com.microsoft.playwright.BrowserType;
-import com.microsoft.playwright.Page;
-import com.microsoft.playwright.Playwright;
+import com.microsoft.playwright.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,10 +26,25 @@ public abstract class AbstractScraper implements ScraperActions {
         try (Playwright playwright = Playwright.create()) {
             logger.debug("Playwright created, trying launch browser");
 
-            browser = playwright.webkit().launch(new BrowserType.LaunchOptions()
-                    .setHeadless(true)
+            browser = playwright.firefox().launch(new BrowserType.LaunchOptions()
+//                    .setHeadless(true)
+//                    .setChromiumSandbox(false)
+//                    .setArgs(List.of(
+////                            "--no-sandbox",
+//                            "--disable-setuid-sandbox",
+//                            "--disable-dev-shm-usage"
+//                    ))
+
 //                    .setArgs(Collections.singletonList("--mute-audio"))
                     .setTimeout(timeout));
+
+            browser.newContext(
+                    new Browser.NewContextOptions()
+                            .setUserAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15")
+                            .setViewportSize(1280, 800)
+                            .setLocale("en-US")
+            );
+
             page = browser.newPage();
 
             logger.debug("Page created, trying navigate");
