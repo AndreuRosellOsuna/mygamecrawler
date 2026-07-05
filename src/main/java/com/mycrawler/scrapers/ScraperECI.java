@@ -1,8 +1,9 @@
 package com.mycrawler.scrapers;
 
-import com.microsoft.playwright.*;
+import com.mycrawler.web.scraper.ScraperActions;
+import com.mycrawler.web.scraper.impl.ScraperFactory;
 
-import java.nio.file.Paths;
+import java.math.BigDecimal;
 import java.util.Map;
 
 public class ScraperECI {
@@ -15,25 +16,22 @@ public class ScraperECI {
     );
 
     public static void main(String[] args) {
-        try (Playwright playwright = Playwright.create()) {
-            Browser browser = playwright.webkit().launch(
-                    new BrowserType.LaunchOptions().setHeadless(true)
-            );
+        runScrapper();
+    }
 
-            games.forEach((name, url) -> {
-                Page page = browser.newPage();
-                Response res = page.navigate(url);
-                page.click("#onetrust-accept-btn-handler");
-                String price = page.locator(".product-detail-price").textContent();
-                System.out.println("price for " + name + " is " + price);
+    private static void runScrapper() {
+        ScraperFactory scraperFactory = new ScraperFactory(10000);
+        ScraperActions gameScraper = scraperFactory.getScraper("ECI");
 
-//                page.screenshot(new Page.ScreenshotOptions()
-//                        .setPath(Paths.get("export/eci/" + name + ".png"))
-//                        .setFullPage(true));
-                page.close();
-            });
+        games.forEach((name, url) -> {
+            try {
+                BigDecimal productPrice = gameScraper.runPriceScrap(name, url);
+                System.out.println("price for " + name + " is " + productPrice);
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.err.println("error!");
+            }
+        });
 
-            browser.close();
-        }
     }
 }

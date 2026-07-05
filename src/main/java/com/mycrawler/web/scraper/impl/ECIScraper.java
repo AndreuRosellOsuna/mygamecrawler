@@ -28,7 +28,7 @@ public class ECIScraper extends AbstractScraper {
         String price = Arrays.stream(
                 page.locator(".product-detail-price")
                         .innerText()
-                        .split(" ")
+                        .split("\n")
         ).sorted().findFirst().orElse("");
 
         logger.info("price for {} is {}", name, price);

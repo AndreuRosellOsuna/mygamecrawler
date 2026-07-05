@@ -27,15 +27,6 @@ public abstract class AbstractScraper implements ScraperActions {
             logger.debug("Playwright created, trying launch browser");
 
             browser = playwright.firefox().launch(new BrowserType.LaunchOptions()
-//                    .setHeadless(true)
-//                    .setChromiumSandbox(false)
-//                    .setArgs(List.of(
-////                            "--no-sandbox",
-//                            "--disable-setuid-sandbox",
-//                            "--disable-dev-shm-usage"
-//                    ))
-
-//                    .setArgs(Collections.singletonList("--mute-audio"))
                     .setTimeout(timeout));
 
             browser.newContext(
