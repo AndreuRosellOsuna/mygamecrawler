@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
+import java.util.Set;
 
 public class PSNScraper extends AbstractScraper {
 
@@ -31,6 +32,9 @@ public class PSNScraper extends AbstractScraper {
             price = page.locator("[data-qa=\"mfeCtaMain#offer1#finalPrice\"]").textContent().trim();
         } else {
             price = page.locator("[data-qa=\"mfeCtaMain#offer0#finalPrice\"]").textContent().trim();
+            if(Set.of("Incluido", "Prueba").contains(price)) {
+                price = page.locator("[data-qa=\"mfeCtaMain#offer1#finalPrice\"]").textContent().trim();
+            }
         }
         logger.info("price for {} is {}", name, price);
 
