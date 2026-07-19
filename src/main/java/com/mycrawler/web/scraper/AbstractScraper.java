@@ -29,14 +29,13 @@ public abstract class AbstractScraper implements ScraperActions {
             browser = playwright.firefox().launch(new BrowserType.LaunchOptions()
                     .setTimeout(timeout));
 
-            browser.newContext(
+            BrowserContext browserContext = browser.newContext(
                     new Browser.NewContextOptions()
                             .setUserAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15")
                             .setViewportSize(1280, 800)
-                            .setLocale("en-US")
+                            .setLocale("es-ES")
             );
-
-            page = browser.newPage();
+            page = browserContext.newPage();
 
             logger.debug("Page created, trying navigate");
             page.navigate(url, new Page.NavigateOptions().setTimeout(timeout));
