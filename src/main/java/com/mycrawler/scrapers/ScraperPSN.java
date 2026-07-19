@@ -9,7 +9,7 @@ import java.util.Map;
 public class ScraperPSN {
 
     private static final Map<String, String> games = Map.of(
-            "GodOfWar", "https://www.playstation.com/es-es/games/god-of-war-ragnarok/"
+            "GodOfWar", "https://www.playstation.com/es-es/games/god-of-war-ragnarok/",
             "IndianaJones", "https://www.playstation.com/es-es/games/indiana-jones-and-the-great-circle/"
     );
 

@@ -13,5 +13,5 @@ docker run --name mycrawler --rm -p 127.0.0.1:8050:8080 --network mam-databases-
 
 ### Run local 
 ```bash
-docker run --name mycrawler --rm -p 8080:8080 --env-file .env -v mycrawler-browser:/ms-playwright andreuro/mycrawler:latest
+docker run --name mycrawler --rm -p 8080:8080 --env-file .envlocaldocker -v mycrawler-browser:/ms-playwright andreuro/mycrawler:latest
 ```
